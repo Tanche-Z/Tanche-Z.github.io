@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#00CED1","save":"manual"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#00CED1","save":"manual"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":true,"preload":true},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="在华为云上使用Halo博客系统。">
@@ -107,6 +107,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -126,11 +127,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">6</span></a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -209,77 +237,82 @@
 <p>​    反正备案出来还有段时间，我重新搭建一次服务器和博客系统算了。更正下mirrors顺便记录下搭建的过程。（不过这样之前文章的日期又要重置了）（为啥不用halo的备份功能？因为，莫得灵魂！！！）</p>
 <h3 id="重置系统"><a href="#重置系统" class="headerlink" title="重置系统"></a>重置系统</h3><p>直接去服务器的控制台，重装系统，这次我选择的是Ubuntu18！（之前的CentOS7和8我试了好久，依赖关系都有些问题，而且自己不清楚怎么解决，就换成Ubuntu了。也许镜像一直在同步？）</p>
 <p>（记得设置个密码，不然一会儿ssh连接的时候会很难受）</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">ssh root@xxx.xxx.xxx.xxx<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">ssh root@xxx.xxx.xxx.xxx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>试试看能不能顺利连接的上吧！</p>
 <h3 id="配置免密登录"><a href="#配置免密登录" class="headerlink" title="配置免密登录"></a>配置免密登录</h3><p>为了方便，还是要配置一下ssh的免密登录的！（如果已经本地已经又公钥的话）（如果没有就<code>ssh-keygen</code>)</p>
 <p>首先，进入本地主机的ssh目录</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">cd</span> .ssh<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">cd .ssh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>然后用<code>scp</code>命令将公钥拷贝到服务器的ssh目录下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">scp id_rsa.pub root@xxx.xxx.xxx.xxx:/root/.ssh      <br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> id_rsa.pub root@xxx.xxx.xxx.xxx:/root/.ssh      <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>然后登陆服务器：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">ssh root@xxx.xxx.xxx.xxx<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">ssh root@xxx.xxx.xxx.xxx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>同样，进入服务器的ssh目录：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">cd</span> .ssh<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">cd .ssh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>使用<code>cat</code>命令将公钥导入到<code>authorized_keys</code>文件中：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">cat id_rsa.pub &gt;&gt; authorized_keys<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">cat id_rsa.pub &gt;&gt; authorized_keys<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>然后<code>exit</code>，重新登陆服务器，是不是不需要输入密码了呢？哦耶！！！</p>
 <h3 id="搭建环境"><a href="#搭建环境" class="headerlink" title="搭建环境"></a>搭建环境</h3><p>博客框架使用的是Halo。</p>
 <p>配置好mirrors以后，更新下系统</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">apt-get update &amp;&amp; apt-get upgrade<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">apt-get update &amp;&amp; apt-get upgrade<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>安装JDK</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">sudo apt-get install java-1.8.0-openjdk<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">sudo apt-get install java-1.8.0-openjdk<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>查看Java的安装状态</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">java -version<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">java -version<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>创建新用户halo</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">sudo useradd -m halo<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">sudo useradd -m halo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>更改halo用户的密码</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">passwd halo<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">passwd halo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>给halo提权：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">visudo<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">visudo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>在以下字段下边</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text"># Allow members of group sudo to execute any command<br>%sudo   ALL=(ALL:ALL) ALL<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text"># Allow members of group sudo to execute any command
+%sudo   ALL&#x3D;(ALL:ALL) ALL<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>加入</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">halo    ALL=(ALL)       ALL<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">halo    ALL&#x3D;(ALL)       ALL<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>保存，退出。</p>
 <p>以halo用户身份登录,并进入用户目录</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs zsh">sudo su halo <br><span class="hljs-built_in">cd</span><br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">sudo su halo 
+cd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 
 
 <p>下载配置文件：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">curl -o ~/.halo/application.yaml --create-dirs https://dl.halo.run/config/application-template.yaml<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">curl -o ~&#x2F;.halo&#x2F;application.yaml --create-dirs https:&#x2F;&#x2F;dl.halo.run&#x2F;config&#x2F;application-template.yaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>再通过镜像下载halo框架的jar包（服务器上配置代理麻烦点，就通过镜像吧）我安装时的最新版本为1.4.1：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">wget https://halo.cary.tech/release/halo-1.4.1.jar -O halo-latest.jar<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">wget https:&#x2F;&#x2F;halo.cary.tech&#x2F;release&#x2F;halo-1.4.1.jar -O halo-latest.jar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>测试下，能否跑起来：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">java -jar halo-latest.jar<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">java -jar halo-latest.jar<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>输出日志会提示是否成功，在浏览器，把127.0.0.1换成服务器IP就可以查看前端和后台了。</p>
 <p>然后回到root身份：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh"><span class="hljs-built_in">exit</span><br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">exit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>开始配置自启动，先下载systemd要使用的.service模板：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs zsh">sudo curl -o /etc/systemd/system/halo.service --create-dirs https://dl.halo.run/config/halo.service<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">sudo curl -o &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;halo.service --create-dirs https:&#x2F;&#x2F;dl.halo.run&#x2F;config&#x2F;halo.service<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>编辑模板，更改jar包的位置：</p>
 <p><code>YOUR_JAR_PATH</code>改成自己刚刚运行的jar包的位置。</p>
 <p>依次执行：</p>
-<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs zsh">sudo systemctl daemon-reload<br>sudo systemctl <span class="hljs-built_in">enable</span> halo<br>sudo systemctl start halo<br>sudo systemctl status halo<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">sudo systemctl daemon-reload
+sudo systemctl enable halo
+sudo systemctl start halo
+sudo systemctl status halo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>再次访问页面并刷新，看看能不能正常访问吧。</p>
 <h3 id="域名访问-SSL证书配置"><a href="#域名访问-SSL证书配置" class="headerlink" title="域名访问/SSL证书配置"></a>域名访问/SSL证书配置</h3><p>请参考<a target="_blank" rel="noopener" href="https://halo.run/archives/install-reverse-proxy.html">https://halo.run/archives/install-reverse-proxy.html</a></p>
@@ -445,6 +478,9 @@
   <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -527,6 +563,10 @@ window.addEventListener('pjax:success', () => {
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#00CED1","save":"manual"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#00CED1","save":"manual"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":true,"preload":true},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="把之前基于Halo的动态博客改为基于Hexo的静态博客，并同时部署到github与服务器。">
@@ -107,6 +107,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -126,11 +127,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">6</span></a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -202,45 +230,64 @@
 <p>​    同时，自己一直通过<code>GithubPage</code>托管一部分博客，一直没能统一部署，所以希望能够寻求到能够同时部署到服务器和github.io的方案。</p>
 <p>​    这几天发现一个关于此的专栏（见文末引用），于是跟着步骤做了一遍。所以此篇为备忘。</p>
 <h2 id="停用Halo"><a href="#停用Halo" class="headerlink" title="停用Halo"></a>停用Halo</h2><p>先ssh连接到服务器，停用<code>Halo</code>的守护进程</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl disable halo<br>systemctl stop halo<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">systemctl disable halo
+systemctl stop halo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 
 
 <h2 id="配置静态资源"><a href="#配置静态资源" class="headerlink" title="配置静态资源"></a>配置静态资源</h2><p>首先将已经托管在<code>GithubPage</code>的仓库克隆到<code>nginx</code>的默认静态资源目录<code>/var/www/html</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /var/www/html<br>git clone xxxxx<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> /var/www/html
+<span class="token function">git</span> clone xxxxx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 
 
 <p>修改nginx的配置文件，将刚刚克隆的资源目录添加为root字段的值</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">server &#123;<br>	listen 80 default_server;<br>	listen [::]:80 default_server;<br><br>	root /var/www/html/xxx.github.io;<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">server <span class="token punctuation">&#123;</span>
+	listen <span class="token number">80</span> default_server<span class="token punctuation">;</span>
+	listen <span class="token punctuation">[</span>::<span class="token punctuation">]</span>:80 default_server<span class="token punctuation">;</span>
+
+	root /var/www/html/xxx.github.io<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
 <h2 id="测试静态资源"><a href="#测试静态资源" class="headerlink" title="测试静态资源"></a>测试静态资源</h2><p>在浏览器输入服务器的ip和端口号（一般为80，就是nginx配置文件中的）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">xxx.xxx.xxx.xxx:80<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">xxx.xxx.xxx.xxx:80<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>如果成功加载网页，就说明之前的配置成功。</p>
 <p>但现在无法使用之前的配置进行<code>域名访问</code>。只需要将之前在<code>/etc/nginx/config.d/</code>下的配置文件（这是Ubuntu的nginx目录，红帽系的可能有所不同）里有root字段的目录也改为和上文nginx配置文件里的一样的就好。（Halo原来的配置为通过代理监听Halo的端口。）</p>
 <p>至此，已经可以通过域名访问从github克隆到服务器的静态资源了。</p>
 <h2 id="配置同时部署"><a href="#配置同时部署" class="headerlink" title="配置同时部署"></a>配置同时部署</h2><p>如果想将本地机里的静态资源同时部署到github和服务器的话，就需要在服务器也创建一个git仓库，并在本地机里将hexo根目录下配置文件里的deploy项进行修改。</p>
 <h4 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h4><p>首先创建一个git用户，用m选项添加家目录，并将其加入root用户组</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">useradd git -m -G root<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">useradd</span> <span class="token function">git</span> -m -G root<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>进入git的家目录并创建裸仓库<code>hexo.git</code>,并将仓库所有者和组权限进行修改</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /home/git/<br>git init --bare hexo.git<br>chown -R git:git hexo.git<br><br>cd /var/www/html/<br>chown -R git:git xxx.github.io<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> /home/git/
+<span class="token function">git</span> init --bare hexo.git
+<span class="token function">chown</span> -R git:git hexo.git
+
+<span class="token builtin class-name">cd</span> /var/www/html/
+<span class="token function">chown</span> -R git:git xxx.github.io<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>配置仓库储存位置，在配置文件<code> /home/git/hexo.git/hooks/post-receive</code>中写入如下内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">!/bin/sh</span><br>git --work-tree=/var/www/html/xxx.github.io --git-dir=/home/git/hexo.git checkout -f<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token shebang important">#!/bin/sh</span>
+<span class="token function">git</span> --work-tree<span class="token operator">=</span>/var/www/html/xxx.github.io --git-dir<span class="token operator">=</span>/home/git/hexo.git checkout -f<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>保存之后，为该文件添加可执行权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">chmod +x post-receive<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">chmod</span> +x post-receive<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
 
 <p>这样，一会儿部署的静态资源就会储存到nginx的默认静态资源目录（见前文）。</p>
 <p>除此，为了在部署时免除密码，需要将本地机的ssh公钥导入git家目录下的<code>~/.ssh/authorized_keys</code>文件中。（如果在root或默认目录下有，也可以复制一份）。</p>
 <h3 id="配置本地机部署"><a href="#配置本地机部署" class="headerlink" title="配置本地机部署"></a>配置本地机部署</h3><p>编辑本地机的Hexo根目录下的配置文件（<code>_config.yml</code>）,修改<code>deploy</code>的内容：</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment"># Deployment</span><br><span class="hljs-comment">## Docs: https://hexo.io/docs/one-command-deployment</span><br><span class="hljs-attr">deploy:</span> <br>  <span class="hljs-attr">type:</span> <span class="hljs-string">git</span><br>  <span class="hljs-attr">repo:</span> <br>        <span class="hljs-attr">github:</span> <span class="hljs-string">git@github.com:your_github_name/your_github_name.github.io.git,main</span><br>        <span class="hljs-attr">hexo:</span> <span class="hljs-string">git@your_server_ip:/home/git/hexo.git,master</span><br><br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"># Deployment
+## Docs: https:&#x2F;&#x2F;hexo.io&#x2F;docs&#x2F;one-command-deployment
+deploy: 
+  type: git
+  repo: 
+        github: git@github.com:your_github_name&#x2F;your_github_name.github.io.git,main
+        hexo: git@your_server_ip:&#x2F;home&#x2F;git&#x2F;hexo.git,master
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
@@ -407,6 +454,9 @@
   <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -489,6 +539,10 @@ window.addEventListener('pjax:success', () => {
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

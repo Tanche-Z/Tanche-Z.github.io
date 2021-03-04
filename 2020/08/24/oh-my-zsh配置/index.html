@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#00CED1","save":"manual"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#00CED1","save":"manual"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":true,"preload":true},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="对oh-my-zsh进行优化，拥有好看，好用的zsh。">
@@ -107,6 +107,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -126,11 +127,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">6</span></a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -203,42 +231,44 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="配置oh-my-zsh和主题"><a href="#配置oh-my-zsh和主题" class="headerlink" title="配置oh-my-zsh和主题"></a>配置oh-my-zsh和主题</h1><h3 id="更改默认shell"><a href="#更改默认shell" class="headerlink" title="更改默认shell"></a>更改默认shell</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">chsh -s <span class="hljs-regexp">/usr/</span>bin/zsh<br></code></pre></td></tr></table></figure>
+        <h1 id="配置oh-my-zsh和主题"><a href="#配置oh-my-zsh和主题" class="headerlink" title="配置oh-my-zsh和主题"></a>配置oh-my-zsh和主题</h1><h3 id="更改默认shell"><a href="#更改默认shell" class="headerlink" title="更改默认shell"></a>更改默认shell</h3><pre class="line-numbers language-none"><code class="language-none">chsh -s &#x2F;usr&#x2F;bin&#x2F;zsh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="配置oh-my-zsh"><a href="#配置oh-my-zsh" class="headerlink" title="配置oh-my-zsh"></a>配置oh-my-zsh</h3><p>github hosts文件更改</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo nano <span class="hljs-regexp">/etc/</span>hosts<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">sudo nano &#x2F;etc&#x2F;hosts<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>添加字段：</p>
-<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs accesslog"># GitHub Start<br><span class="hljs-number">151.101.76.133</span> raw.githubusercontent.com<br># GitHub End<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none"># GitHub Start
+151.101.76.133 raw.githubusercontent.com
+# GitHub End<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>下载oh-my-zsh</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/robbyrussell/</span>oh-my-zsh<span class="hljs-regexp">/raw/m</span>aster<span class="hljs-regexp">/tools/i</span>nstall.sh -O - | sh<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">wget https:&#x2F;&#x2F;github.com&#x2F;robbyrussell&#x2F;oh-my-zsh&#x2F;raw&#x2F;master&#x2F;tools&#x2F;install.sh -O - | sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>安装高亮功能</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/zsh-users/</span>zsh-syntax-highlighting.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span><span class="hljs-regexp">/plugins/</span>zsh-syntax-highlighting<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;zsh-users&#x2F;zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~&#x2F;.oh-my-zsh&#x2F;custom&#125;&#x2F;plugins&#x2F;zsh-syntax-highlighting<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>安装自动补全功能</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone git:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/zsh-users/</span>zsh-autosuggestions ~<span class="hljs-regexp">/.oh-my-zsh/</span>custom<span class="hljs-regexp">/plugins/</span>zsh-autosuggestions<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">git clone git:&#x2F;&#x2F;github.com&#x2F;zsh-users&#x2F;zsh-autosuggestions ~&#x2F;.oh-my-zsh&#x2F;custom&#x2F;plugins&#x2F;zsh-autosuggestions<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>修改配置文件，以启用功能</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">nano ~<span class="hljs-string">/.zshrc</span><br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">nano ~&#x2F;.zshrc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>插件改为：</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">plugins</span>=(git zsh-syntax-highlighting zsh-autosuggestions sudo extract)<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">plugins&#x3D;(git zsh-syntax-highlighting zsh-autosuggestions sudo extract)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>执行<code>source ~/.zshrc</code></p>
 <h3 id="配置主题（Powerlevel-10k）"><a href="#配置主题（Powerlevel-10k）" class="headerlink" title="配置主题（Powerlevel-10k）"></a>配置主题（Powerlevel-10k）</h3><p>git命令克隆：</p>
 <p>github：</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone --depth=<span class="hljs-number">1</span> https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/romkatv/</span>powerlevel10k.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom&#125;</span><span class="hljs-regexp">/themes/</span>powerlevel10k<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">git clone --depth&#x3D;1 https:&#x2F;&#x2F;github.com&#x2F;romkatv&#x2F;powerlevel10k.git $&#123;ZSH_CUSTOM:-$HOME&#x2F;.oh-my-zsh&#x2F;custom&#125;&#x2F;themes&#x2F;powerlevel10k<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>gitee：</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">git clone --depth=<span class="hljs-number">1</span> https:<span class="hljs-regexp">//gi</span>tee.com<span class="hljs-regexp">/romkatv/</span>powerlevel10k.git <span class="hljs-variable">$&#123;ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom&#125;</span><span class="hljs-regexp">/themes/</span>powerlevel10k<br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">git clone --depth&#x3D;1 https:&#x2F;&#x2F;gitee.com&#x2F;romkatv&#x2F;powerlevel10k.git $&#123;ZSH_CUSTOM:-$HOME&#x2F;.oh-my-zsh&#x2F;custom&#125;&#x2F;themes&#x2F;powerlevel10k<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>修改配置文件</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">nano ~<span class="hljs-string">/.zshrc</span><br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">nano ~&#x2F;.zshrc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>主题改为</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">ZSH_THEME</span>=<span class="hljs-string">&quot;powerlevel10k/powerlevel10k&quot;</span><br></code></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">ZSH_THEME&#x3D;&quot;powerlevel10k&#x2F;powerlevel10k&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>想要启用主题中的图标，需要安装<code>nerd</code>字体</p>
 <p>比如Arch-Linux中的<code>nerd-fonts-hack</code>，<code>nerd-fonts-source-code-pro</code>等</p>
@@ -404,6 +434,9 @@
   <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -486,6 +519,10 @@ window.addEventListener('pjax:success', () => {
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
