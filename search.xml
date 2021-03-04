@@ -56,40 +56,6 @@ GRUB_SAVEDEFAULT&#x3D;true<span aria-hidden="true" class="line-numbers-rows"><sp
       </tags>
   </entry>
   <entry>
-    <title>Mac VScode 调试C踩坑</title>
-    <url>/2021/02/27/Mac-VScode-%E8%B0%83%E8%AF%95C%E8%B8%A9%E5%9D%91/</url>
-    <content><![CDATA[<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在按下调试按钮后，可以成功编译出二进制文件，但不会在终端中运行、输出。</p>
-<h3 id="猜测"><a href="#猜测" class="headerlink" title="猜测"></a>猜测</h3><p>应该是<code>lauch.json</code>的配置有问题。</p>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h4><p>经过广泛搜索和摸索，似乎是VS code默认不再原生支持lldb调试，需要安装插件<code>CodeLLDB</code>，并重新配置<code>lauch.json</code>文件，具体配置可参考插件介绍页面的<code>Quick Start</code>栏。</p>
-<h4 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h4><p>需要注意，如需要在编译后自动调试，还需要将<code>program</code>项的值改为和<code>tasks.json</code>文件中的一样。除此之外还需要加入<code>preLaunchTask</code>项。以下为我的<code>launch.json</code>全文件。</p>
-<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
-    <span class="token comment">// 使用 IntelliSense 了解相关属性。 </span>
-    <span class="token comment">// 悬停以查看现有属性的描述。</span>
-    <span class="token comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span>
-    <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"0.2.0"</span><span class="token punctuation">,</span>
-    <span class="token property">"configurations"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token punctuation">&#123;</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"lldb"</span><span class="token punctuation">,</span>
-            <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span>
-            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Debug"</span><span class="token punctuation">,</span>
-            <span class="token property">"program"</span><span class="token operator">:</span> <span class="token string">"$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;"</span><span class="token punctuation">,</span>   <span class="token comment">//需要添加</span>
-            <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-            <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"$&#123;workspaceFolder&#125;"</span><span class="token punctuation">,</span>
-            <span class="token property">"preLaunchTask"</span><span class="token operator">:</span> <span class="token string">"C/C++: gcc 生成活动文件"</span><span class="token punctuation">,</span>       <span class="token comment">//需要添加</span>
-            <span class="token comment">//"console": "externalTerminal"       //打开外部终端</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">]</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>至此就可以用lldb正常调试。</p>
-<p>注意：当修改<code>&quot;type&quot;</code>项的时候，<code>&quot;console&quot;</code>项也需要跟着变化（虽然都是控制终端，但写法不同）。</p>
-]]></content>
-      <tags>
-        <tag>C</tag>
-        <tag>VS Code</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>WSL2的配置</title>
     <url>/2020/07/20/WSL2%E7%9A%84%E9%85%8D%E7%BD%AE/</url>
     <content><![CDATA[<h2 id="有关WSL2的安装及其代理设置"><a href="#有关WSL2的安装及其代理设置" class="headerlink" title="有关WSL2的安装及其代理设置"></a>有关WSL2的安装及其代理设置</h2><hr>
@@ -136,6 +102,92 @@ GRUB_SAVEDEFAULT&#x3D;true<span aria-hidden="true" class="line-numbers-rows"><sp
         <tag>Linux</tag>
         <tag>shell</tag>
         <tag>proxy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>oh-my-zsh配置</title>
+    <url>/2020/08/24/oh-my-zsh%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<h1 id="配置oh-my-zsh和主题"><a href="#配置oh-my-zsh和主题" class="headerlink" title="配置oh-my-zsh和主题"></a>配置oh-my-zsh和主题</h1><h3 id="更改默认shell"><a href="#更改默认shell" class="headerlink" title="更改默认shell"></a>更改默认shell</h3><pre class="line-numbers language-none"><code class="language-none">chsh -s &#x2F;usr&#x2F;bin&#x2F;zsh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="配置oh-my-zsh"><a href="#配置oh-my-zsh" class="headerlink" title="配置oh-my-zsh"></a>配置oh-my-zsh</h3><p>github hosts文件更改</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo nano &#x2F;etc&#x2F;hosts<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>添加字段：</p>
+<pre class="line-numbers language-none"><code class="language-none"># GitHub Start
+151.101.76.133 raw.githubusercontent.com
+# GitHub End<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>下载oh-my-zsh</p>
+<pre class="line-numbers language-none"><code class="language-none">wget https:&#x2F;&#x2F;github.com&#x2F;robbyrussell&#x2F;oh-my-zsh&#x2F;raw&#x2F;master&#x2F;tools&#x2F;install.sh -O - | sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>安装高亮功能</p>
+<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;zsh-users&#x2F;zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~&#x2F;.oh-my-zsh&#x2F;custom&#125;&#x2F;plugins&#x2F;zsh-syntax-highlighting<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>安装自动补全功能</p>
+<pre class="line-numbers language-none"><code class="language-none">git clone git:&#x2F;&#x2F;github.com&#x2F;zsh-users&#x2F;zsh-autosuggestions ~&#x2F;.oh-my-zsh&#x2F;custom&#x2F;plugins&#x2F;zsh-autosuggestions<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>修改配置文件，以启用功能</p>
+<pre class="line-numbers language-none"><code class="language-none">nano ~&#x2F;.zshrc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>插件改为：</p>
+<pre class="line-numbers language-none"><code class="language-none">plugins&#x3D;(git zsh-syntax-highlighting zsh-autosuggestions sudo extract)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>执行<code>source ~/.zshrc</code></p>
+<h3 id="配置主题（Powerlevel-10k）"><a href="#配置主题（Powerlevel-10k）" class="headerlink" title="配置主题（Powerlevel-10k）"></a>配置主题（Powerlevel-10k）</h3><p>git命令克隆：</p>
+<p>github：</p>
+<pre class="line-numbers language-none"><code class="language-none">git clone --depth&#x3D;1 https:&#x2F;&#x2F;github.com&#x2F;romkatv&#x2F;powerlevel10k.git $&#123;ZSH_CUSTOM:-$HOME&#x2F;.oh-my-zsh&#x2F;custom&#125;&#x2F;themes&#x2F;powerlevel10k<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>gitee：</p>
+<pre class="line-numbers language-none"><code class="language-none">git clone --depth&#x3D;1 https:&#x2F;&#x2F;gitee.com&#x2F;romkatv&#x2F;powerlevel10k.git $&#123;ZSH_CUSTOM:-$HOME&#x2F;.oh-my-zsh&#x2F;custom&#125;&#x2F;themes&#x2F;powerlevel10k<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>修改配置文件</p>
+<pre class="line-numbers language-none"><code class="language-none">nano ~&#x2F;.zshrc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>主题改为</p>
+<pre class="line-numbers language-none"><code class="language-none">ZSH_THEME&#x3D;&quot;powerlevel10k&#x2F;powerlevel10k&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>想要启用主题中的图标，需要安装<code>nerd</code>字体</p>
+<p>比如Arch-Linux中的<code>nerd-fonts-hack</code>，<code>nerd-fonts-source-code-pro</code>等</p>
+<p>重启并按照步骤个性化设置 </p>
+]]></content>
+      <tags>
+        <tag>Shell</tag>
+        <tag>zsh</tag>
+        <tag>oh-my-zsh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mac VScode 调试C踩坑</title>
+    <url>/2021/02/27/Mac-VScode-%E8%B0%83%E8%AF%95C%E8%B8%A9%E5%9D%91/</url>
+    <content><![CDATA[<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在按下调试按钮后，可以成功编译出二进制文件，但不会在终端中运行、输出。</p>
+<h3 id="猜测"><a href="#猜测" class="headerlink" title="猜测"></a>猜测</h3><p>应该是<code>lauch.json</code>的配置有问题。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h4><p>经过广泛搜索和摸索，似乎是VS code默认不再原生支持lldb调试，需要安装插件<code>CodeLLDB</code>，并重新配置<code>lauch.json</code>文件，具体配置可参考插件介绍页面的<code>Quick Start</code>栏。</p>
+<h4 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h4><p>需要注意，如需要在编译后自动调试，还需要将<code>program</code>项的值改为和<code>tasks.json</code>文件中的一样。除此之外还需要加入<code>preLaunchTask</code>项。以下为我的<code>launch.json</code>全文件。</p>
+<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
+    <span class="token comment">// 使用 IntelliSense 了解相关属性。 </span>
+    <span class="token comment">// 悬停以查看现有属性的描述。</span>
+    <span class="token comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span>
+    <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"0.2.0"</span><span class="token punctuation">,</span>
+    <span class="token property">"configurations"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"lldb"</span><span class="token punctuation">,</span>
+            <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span>
+            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Debug"</span><span class="token punctuation">,</span>
+            <span class="token property">"program"</span><span class="token operator">:</span> <span class="token string">"$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;"</span><span class="token punctuation">,</span>   <span class="token comment">//需要添加</span>
+            <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+            <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"$&#123;workspaceFolder&#125;"</span><span class="token punctuation">,</span>
+            <span class="token property">"preLaunchTask"</span><span class="token operator">:</span> <span class="token string">"C/C++: gcc 生成活动文件"</span><span class="token punctuation">,</span>       <span class="token comment">//需要添加</span>
+            <span class="token comment">//"console": "externalTerminal"       //打开外部终端</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>至此就可以用lldb正常调试。</p>
+<p>注意：当修改<code>&quot;type&quot;</code>项的时候，<code>&quot;console&quot;</code>项也需要跟着变化（虽然都是控制终端，但写法不同）。</p>
+]]></content>
+      <tags>
+        <tag>C</tag>
+        <tag>VS Code</tag>
       </tags>
   </entry>
   <entry>
@@ -233,58 +285,6 @@ sudo systemctl status halo<span aria-hidden="true" class="line-numbers-rows"><sp
         <tag>Webserver,Blog</tag>
         <tag>Halo</tag>
         <tag>Ubuntu</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>oh-my-zsh配置</title>
-    <url>/2020/08/24/oh-my-zsh%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h1 id="配置oh-my-zsh和主题"><a href="#配置oh-my-zsh和主题" class="headerlink" title="配置oh-my-zsh和主题"></a>配置oh-my-zsh和主题</h1><h3 id="更改默认shell"><a href="#更改默认shell" class="headerlink" title="更改默认shell"></a>更改默认shell</h3><pre class="line-numbers language-none"><code class="language-none">chsh -s &#x2F;usr&#x2F;bin&#x2F;zsh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h3 id="配置oh-my-zsh"><a href="#配置oh-my-zsh" class="headerlink" title="配置oh-my-zsh"></a>配置oh-my-zsh</h3><p>github hosts文件更改</p>
-<pre class="line-numbers language-none"><code class="language-none">sudo nano &#x2F;etc&#x2F;hosts<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>添加字段：</p>
-<pre class="line-numbers language-none"><code class="language-none"># GitHub Start
-151.101.76.133 raw.githubusercontent.com
-# GitHub End<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>下载oh-my-zsh</p>
-<pre class="line-numbers language-none"><code class="language-none">wget https:&#x2F;&#x2F;github.com&#x2F;robbyrussell&#x2F;oh-my-zsh&#x2F;raw&#x2F;master&#x2F;tools&#x2F;install.sh -O - | sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>安装高亮功能</p>
-<pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;zsh-users&#x2F;zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~&#x2F;.oh-my-zsh&#x2F;custom&#125;&#x2F;plugins&#x2F;zsh-syntax-highlighting<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>安装自动补全功能</p>
-<pre class="line-numbers language-none"><code class="language-none">git clone git:&#x2F;&#x2F;github.com&#x2F;zsh-users&#x2F;zsh-autosuggestions ~&#x2F;.oh-my-zsh&#x2F;custom&#x2F;plugins&#x2F;zsh-autosuggestions<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>修改配置文件，以启用功能</p>
-<pre class="line-numbers language-none"><code class="language-none">nano ~&#x2F;.zshrc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>插件改为：</p>
-<pre class="line-numbers language-none"><code class="language-none">plugins&#x3D;(git zsh-syntax-highlighting zsh-autosuggestions sudo extract)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>执行<code>source ~/.zshrc</code></p>
-<h3 id="配置主题（Powerlevel-10k）"><a href="#配置主题（Powerlevel-10k）" class="headerlink" title="配置主题（Powerlevel-10k）"></a>配置主题（Powerlevel-10k）</h3><p>git命令克隆：</p>
-<p>github：</p>
-<pre class="line-numbers language-none"><code class="language-none">git clone --depth&#x3D;1 https:&#x2F;&#x2F;github.com&#x2F;romkatv&#x2F;powerlevel10k.git $&#123;ZSH_CUSTOM:-$HOME&#x2F;.oh-my-zsh&#x2F;custom&#125;&#x2F;themes&#x2F;powerlevel10k<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>gitee：</p>
-<pre class="line-numbers language-none"><code class="language-none">git clone --depth&#x3D;1 https:&#x2F;&#x2F;gitee.com&#x2F;romkatv&#x2F;powerlevel10k.git $&#123;ZSH_CUSTOM:-$HOME&#x2F;.oh-my-zsh&#x2F;custom&#125;&#x2F;themes&#x2F;powerlevel10k<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>修改配置文件</p>
-<pre class="line-numbers language-none"><code class="language-none">nano ~&#x2F;.zshrc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>主题改为</p>
-<pre class="line-numbers language-none"><code class="language-none">ZSH_THEME&#x3D;&quot;powerlevel10k&#x2F;powerlevel10k&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>想要启用主题中的图标，需要安装<code>nerd</code>字体</p>
-<p>比如Arch-Linux中的<code>nerd-fonts-hack</code>，<code>nerd-fonts-source-code-pro</code>等</p>
-<p>重启并按照步骤个性化设置 </p>
-]]></content>
-      <tags>
-        <tag>Shell</tag>
-        <tag>zsh</tag>
-        <tag>oh-my-zsh</tag>
       </tags>
   </entry>
   <entry>
