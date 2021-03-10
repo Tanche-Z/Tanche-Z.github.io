@@ -3,18 +3,21 @@
   <entry>
     <title>GRUB美化</title>
     <url>/2020/11/24/GRUB%E7%BE%8E%E5%8C%96/</url>
-    <content><![CDATA[<h1 id="grub美化的一些方法"><a href="#grub美化的一些方法" class="headerlink" title="grub美化的一些方法"></a>grub美化的一些方法</h1><hr>
+    <content><![CDATA[<h1 id="grub美化的一些方法"><a class="markdownIt-Anchor" href="#grub美化的一些方法"></a> grub美化的一些方法</h1>
+<hr />
 <p>在安装了Arch-Linux后，我使用的Matebook是高分辨率屏幕，grub的字体非常小，而且grub的界面不在居中的位置（而且黑黑的，奇丑无比）。于是来美化一下。</p>
-<h3 id="准备主题"><a href="#准备主题" class="headerlink" title="准备主题"></a>准备主题</h3><p>首先，去以下网址添加选择，下载自己喜欢的grub主题：</p>
+<h3 id="准备主题"><a class="markdownIt-Anchor" href="#准备主题"></a> 准备主题</h3>
+<p>首先，去以下网址添加选择，下载自己喜欢的grub主题：</p>
 <pre class="line-numbers language-none"><code class="language-none">https:&#x2F;&#x2F;www.gnome-look.org&#x2F;browse&#x2F;cat&#x2F;109&#x2F;ord&#x2F;rating&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>一般来说，下载下来的是压缩包。解压之后，可以在里面找到一个安装脚本（install.sh），以及主题所需要的配置文件（xxx.conf之类的)</p>
+<p>一般来说，下载下来的是压缩包。解压之后，可以在里面找到一个安装脚本（<a href="http://install.sh">install.sh</a>），以及主题所需要的配置文件（xxx.conf之类的)</p>
 <p>，还有主题所需要的背景图片、图标包等。</p>
 <p>使用<code>cd</code>命令进入“你自己的”下载缓存目录</p>
 <pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">cd &#x2F;home&#x2F;username&#x2F;Downloads&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>如果想的话，用<code>ll</code>或者<code>ls</code>命令查看文件名字</p>
 <p>如果你和我一样，安装了oh-my-zsh，并且启用的extract插件，可以直接使用<code>extract</code>命令进行解压（如果没有这个插件，可以查看我之前关于oh-my-zsh的配置文章，或者搜索相应的压缩包在shell中对应的解压命令（如<code>unzip</code>等）。</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">extract xxxx.zip<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h3><p>解压完成后，再次<code>ls</code>，应该会出现新的文件夹，使用<code>cd</code>命令进入文件夹</p>
+<h3 id="安装主题"><a class="markdownIt-Anchor" href="#安装主题"></a> 安装主题</h3>
+<p>解压完成后，再次<code>ls</code>，应该会出现新的文件夹，使用<code>cd</code>命令进入文件夹</p>
 <p>然后使用<code>sh</code>命令进行安装</p>
 <pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">sudo sh install.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>或者</p>
@@ -24,12 +27,15 @@
 <p>如需更改背景图片，就替换掉<code>background.jpg</code>文件，注意：文件名和后缀必须完全一样。</p>
 <p>另：grub不支持自动缩放和剪裁，如果你的图片和自己屏幕的原始分辨率不匹配的话，请预先处理再进行替换。</p>
 <p>替换完成后就可以欣赏自己的新主题了！</p>
-<h3 id="其他常用grub设置"><a href="#其他常用grub设置" class="headerlink" title="其他常用grub设置"></a>其他常用grub设置</h3><p>一般对gurb的配置修改，不会对在<code>/boot/</code>下的<code>.cfg</code>文件进行修改，因为那是自动生成，并会被grub直接使用的配置文件，修改错误风险较大。所以修改以下文件</p>
+<h3 id="其他常用grub设置"><a class="markdownIt-Anchor" href="#其他常用grub设置"></a> 其他常用grub设置</h3>
+<p>一般对gurb的配置修改，不会对在<code>/boot/</code>下的<code>.cfg</code>文件进行修改，因为那是自动生成，并会被grub直接使用的配置文件，修改错误风险较大。所以修改以下文件</p>
 <pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">sudo vim &#x2F;etc&#x2F;default&#x2F;grub<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h4 id="更改倒计时时间（10为十秒。-1为不倒计时，也就是一直等待用户选择）"><a href="#更改倒计时时间（10为十秒。-1为不倒计时，也就是一直等待用户选择）" class="headerlink" title="更改倒计时时间（10为十秒。-1为不倒计时，也就是一直等待用户选择）"></a>更改倒计时时间（10为十秒。-1为不倒计时，也就是一直等待用户选择）</h4><pre class="line-numbers language-text" data-language="text"><code class="language-text">GRUB_TIMEOUT&#x3D;10<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h4 id="记住上次的选择（可以记住上次选择的启动项）"><a href="#记住上次的选择（可以记住上次选择的启动项）" class="headerlink" title="记住上次的选择（可以记住上次选择的启动项）"></a>记住上次的选择（可以记住上次选择的启动项）</h4><pre class="line-numbers language-text" data-language="text"><code class="language-text">GRUB_DEFAULT&#x3D;saved
+<h4 id="更改倒计时时间10为十秒-1为不倒计时也就是一直等待用户选择"><a class="markdownIt-Anchor" href="#更改倒计时时间10为十秒-1为不倒计时也就是一直等待用户选择"></a> 更改倒计时时间（10为十秒。-1为不倒计时，也就是一直等待用户选择）</h4>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">GRUB_TIMEOUT&#x3D;10<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="记住上次的选择可以记住上次选择的启动项"><a class="markdownIt-Anchor" href="#记住上次的选择可以记住上次选择的启动项"></a> 记住上次的选择（可以记住上次选择的启动项）</h4>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">GRUB_DEFAULT&#x3D;saved
 GRUB_SAVEDEFAULT&#x3D;true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<hr>
+<hr />
 <p>以上就是我对grub的常规配置啦，希望能够帮到你~</p>
 ]]></content>
       <tags>
@@ -40,15 +46,18 @@ GRUB_SAVEDEFAULT&#x3D;true<span aria-hidden="true" class="line-numbers-rows"><sp
   <entry>
     <title>Linux博客服务器</title>
     <url>/2020/10/06/Linux%E5%8D%9A%E5%AE%A2%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
-    <content><![CDATA[<h2 id="记一次在Linux服务器上搭建Halo博客系统"><a href="#记一次在Linux服务器上搭建Halo博客系统" class="headerlink" title="记一次在Linux服务器上搭建Halo博客系统"></a>记一次在Linux服务器上搭建Halo博客系统</h2><hr>
+    <content><![CDATA[<h2 id="记一次在linux服务器上搭建halo博客系统"><a class="markdownIt-Anchor" href="#记一次在linux服务器上搭建halo博客系统"></a> 记一次在Linux服务器上搭建Halo博客系统</h2>
+<hr />
 <p>2020/10/6</p>
-<p>​    之前在华为云上搭建的博客系统总感觉慢慢的，有点不对劲。突然想起来华为云的这个服务器不是x86_64平台的，而是基于鲲鹏ARM64的！用<code>uname -a</code>查看后确认了（呜呜呜呜）我居然还专门改镜像来更新，现在是不是我的服务器的软件包都是x86平台的了，hhhhh</p>
-<p>​    反正备案出来还有段时间，我重新搭建一次服务器和博客系统算了。更正下mirrors顺便记录下搭建的过程。（不过这样之前文章的日期又要重置了）（为啥不用halo的备份功能？因为，莫得灵魂！！！）</p>
-<h3 id="重置系统"><a href="#重置系统" class="headerlink" title="重置系统"></a>重置系统</h3><p>直接去服务器的控制台，重装系统，这次我选择的是Ubuntu18！（之前的CentOS7和8我试了好久，依赖关系都有些问题，而且自己不清楚怎么解决，就换成Ubuntu了。也许镜像一直在同步？）</p>
+<p>​	之前在华为云上搭建的博客系统总感觉慢慢的，有点不对劲。突然想起来华为云的这个服务器不是x86_64平台的，而是基于鲲鹏ARM64的！用<code>uname -a</code>查看后确认了（呜呜呜呜）我居然还专门改镜像来更新，现在是不是我的服务器的软件包都是x86平台的了，hhhhh</p>
+<p>​	反正备案出来还有段时间，我重新搭建一次服务器和博客系统算了。更正下mirrors顺便记录下搭建的过程。（不过这样之前文章的日期又要重置了）（为啥不用halo的备份功能？因为，莫得灵魂！！！）</p>
+<h3 id="重置系统"><a class="markdownIt-Anchor" href="#重置系统"></a> 重置系统</h3>
+<p>直接去服务器的控制台，重装系统，这次我选择的是Ubuntu18！（之前的CentOS7和8我试了好久，依赖关系都有些问题，而且自己不清楚怎么解决，就换成Ubuntu了。也许镜像一直在同步？）</p>
 <p>（记得设置个密码，不然一会儿ssh连接的时候会很难受）</p>
 <pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">ssh root@xxx.xxx.xxx.xxx<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>试试看能不能顺利连接的上吧！</p>
-<h3 id="配置免密登录"><a href="#配置免密登录" class="headerlink" title="配置免密登录"></a>配置免密登录</h3><p>为了方便，还是要配置一下ssh的免密登录的！（如果已经本地已经又公钥的话）（如果没有就<code>ssh-keygen</code>)</p>
+<h3 id="配置免密登录"><a class="markdownIt-Anchor" href="#配置免密登录"></a> 配置免密登录</h3>
+<p>为了方便，还是要配置一下ssh的免密登录的！（如果已经本地已经又公钥的话）（如果没有就<code>ssh-keygen</code>)</p>
 <p>首先，进入本地主机的ssh目录</p>
 <pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">cd .ssh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>然后用<code>scp</code>命令将公钥拷贝到服务器的ssh目录下</p>
@@ -60,7 +69,8 @@ GRUB_SAVEDEFAULT&#x3D;true<span aria-hidden="true" class="line-numbers-rows"><sp
 <p>使用<code>cat</code>命令将公钥导入到<code>authorized_keys</code>文件中：</p>
 <pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">cat id_rsa.pub &gt;&gt; authorized_keys<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>然后<code>exit</code>，重新登陆服务器，是不是不需要输入密码了呢？哦耶！！！</p>
-<h3 id="搭建环境"><a href="#搭建环境" class="headerlink" title="搭建环境"></a>搭建环境</h3><p>博客框架使用的是Halo。</p>
+<h3 id="搭建环境"><a class="markdownIt-Anchor" href="#搭建环境"></a> 搭建环境</h3>
+<p>博客框架使用的是Halo。</p>
 <p>配置好mirrors以后，更新下系统</p>
 <pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">apt-get update &amp;&amp; apt-get upgrade<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>安装JDK</p>
@@ -101,7 +111,8 @@ sudo systemctl enable halo
 sudo systemctl start halo
 sudo systemctl status halo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>再次访问页面并刷新，看看能不能正常访问吧。</p>
-<h3 id="域名访问-SSL证书配置"><a href="#域名访问-SSL证书配置" class="headerlink" title="域名访问/SSL证书配置"></a>域名访问/SSL证书配置</h3><p>请参考<a href="https://halo.run/archives/install-reverse-proxy.html">https://halo.run/archives/install-reverse-proxy.html</a></p>
+<h3 id="域名访问ssl证书配置"><a class="markdownIt-Anchor" href="#域名访问ssl证书配置"></a> 域名访问/SSL证书配置</h3>
+<p>请参考https://halo.run/archives/install-reverse-proxy.html</p>
 <p>在后台配置好主题，就可以愉快、优雅的写博客啦！！！</p>
 ]]></content>
       <tags>
@@ -114,10 +125,15 @@ sudo systemctl status halo<span aria-hidden="true" class="line-numbers-rows"><sp
   <entry>
     <title>Mac VScode 调试C踩坑</title>
     <url>/2021/02/27/Mac-VScode-%E8%B0%83%E8%AF%95C%E8%B8%A9%E5%9D%91/</url>
-    <content><![CDATA[<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在按下调试按钮后，可以成功编译出二进制文件，但不会在终端中运行、输出。</p>
-<h3 id="猜测"><a href="#猜测" class="headerlink" title="猜测"></a>猜测</h3><p>应该是<code>lauch.json</code>的配置有问题。</p>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h4><p>经过广泛搜索和摸索，似乎是VS code默认不再原生支持lldb调试，需要安装插件<code>CodeLLDB</code>，并重新配置<code>lauch.json</code>文件，具体配置可参考插件介绍页面的<code>Quick Start</code>栏。</p>
-<h4 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h4><p>需要注意，如需要在编译后自动调试，还需要将<code>program</code>项的值改为和<code>tasks.json</code>文件中的一样。除此之外还需要加入<code>preLaunchTask</code>项。以下为我的<code>launch.json</code>全文件。</p>
+    <content><![CDATA[<h3 id="问题"><a class="markdownIt-Anchor" href="#问题"></a> 问题</h3>
+<p>在按下调试按钮后，可以成功编译出二进制文件，但不会在终端中运行、输出。</p>
+<h3 id="猜测"><a class="markdownIt-Anchor" href="#猜测"></a> 猜测</h3>
+<p>应该是<code>lauch.json</code>的配置有问题。</p>
+<h3 id="解决方案"><a class="markdownIt-Anchor" href="#解决方案"></a> 解决方案</h3>
+<h4 id="安装插件"><a class="markdownIt-Anchor" href="#安装插件"></a> 安装插件</h4>
+<p>经过广泛搜索和摸索，似乎是VS code默认不再原生支持lldb调试，需要安装插件<code>CodeLLDB</code>，并重新配置<code>lauch.json</code>文件，具体配置可参考插件介绍页面的<code>Quick Start</code>栏。</p>
+<h4 id="修改配置"><a class="markdownIt-Anchor" href="#修改配置"></a> 修改配置</h4>
+<p>需要注意，如需要在编译后自动调试，还需要将<code>program</code>项的值改为和<code>tasks.json</code>文件中的一样。除此之外还需要加入<code>preLaunchTask</code>项。以下为我的<code>launch.json</code>全文件。</p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
     <span class="token comment">// 使用 IntelliSense 了解相关属性。 </span>
     <span class="token comment">// 悬停以查看现有属性的描述。</span>
@@ -147,9 +163,11 @@ sudo systemctl status halo<span aria-hidden="true" class="line-numbers-rows"><sp
   <entry>
     <title>WSL2的配置</title>
     <url>/2020/07/20/WSL2%E7%9A%84%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h2 id="有关WSL2的安装及其代理设置"><a href="#有关WSL2的安装及其代理设置" class="headerlink" title="有关WSL2的安装及其代理设置"></a>有关WSL2的安装及其代理设置</h2><hr>
-<p>​    一直都装着双系统，需要Linux环境的时候也就进到Arch中，不需要的时候就去到Win10。但双系统是多有不便啊，不能同时享受Windows对外设的完美适配以及丰富稳定的软件和Linux环境。于是最近又重新折腾起了WSL。但花费我最多时间的就是WSL2的网络代理了。</p>
-<h3 id="安装WSL2"><a href="#安装WSL2" class="headerlink" title="安装WSL2"></a>安装WSL2</h3><p>首先需要最新的Win10系统，并更新到最新吧！（2333333）(可以考虑开启开发者选项)</p>
+    <content><![CDATA[<h2 id="有关wsl2的安装及其代理设置"><a class="markdownIt-Anchor" href="#有关wsl2的安装及其代理设置"></a> 有关WSL2的安装及其代理设置</h2>
+<hr />
+<p>​	一直都装着双系统，需要Linux环境的时候也就进到Arch中，不需要的时候就去到Win10。但双系统是多有不便啊，不能同时享受Windows对外设的完美适配以及丰富稳定的软件和Linux环境。于是最近又重新折腾起了WSL。但花费我最多时间的就是WSL2的网络代理了。</p>
+<h3 id="安装wsl2"><a class="markdownIt-Anchor" href="#安装wsl2"></a> 安装WSL2</h3>
+<p>首先需要最新的Win10系统，并更新到最新吧！（2333333）(可以考虑开启开发者选项)</p>
 <p>然后去<code>设置-应用-可选功能-更多windows功能</code>开启<code>适用于linux的windows子系统</code>和<code>虚拟机平台</code>，并等待安装完毕、重启。（注意，不安装虚拟机平台的化只能启用WSL1，因为WSL2是基于虚拟机的。）</p>
 <p>重启完毕后，在win10商店里搜索<code>linux</code>，会出现Ubuntu，Kali等常见发行版，选一个自己喜欢的安装吧。（其实这一步还没有正式把Linux子系统安装到windows里）</p>
 <p>以Ubuntu为例，在windows全局搜索栏中搜索Ubuntu，或者在<code>cmd</code>中输入<code>Ubuntu</code>并回车，就会自动安装。待安装完毕就可以按照提示输入用户名和密码。（动手安装过Arch的用户应该会很熟悉）之后子系统就会自动进入c盘的用户目录下了。</p>
@@ -159,22 +177,28 @@ sudo systemctl status halo<span aria-hidden="true" class="line-numbers-rows"><sp
 <pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd">wsl --set-version Ubuntu 2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>若要以后默认你为WSL2，则输入：</p>
 <pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd">wsl --set-default-version 2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="配置WSL2"><a href="#配置WSL2" class="headerlink" title="配置WSL2"></a>配置WSL2</h3><p>其实配置WSL和配置普通发行版机会没有什么区别，更新下系统里的包，安装下自己所需要的工具包就好了。</p>
+<h3 id="配置wsl2"><a class="markdownIt-Anchor" href="#配置wsl2"></a> 配置WSL2</h3>
+<p>其实配置WSL和配置普通发行版机会没有什么区别，更新下系统里的包，安装下自己所需要的工具包就好了。</p>
 <p>我遇到的主要问题在代理的配置上。</p>
-<h3 id="配置WSL2的代理"><a href="#配置WSL2的代理" class="headerlink" title="配置WSL2的代理"></a>配置WSL2的代理</h3><p>在国内使用<code>Github</code>的话，总是遇到许许多多的问题，这往往需要通过代理来提升代码管理的体验。我主要聊一聊git相关的代理设置吧。</p>
+<h3 id="配置wsl2的代理"><a class="markdownIt-Anchor" href="#配置wsl2的代理"></a> 配置WSL2的代理</h3>
+<p>在国内使用<code>Github</code>的话，总是遇到许许多多的问题，这往往需要通过代理来提升代码管理的体验。我主要聊一聊git相关的代理设置吧。</p>
 <p>如果是给Git设置全局代理，直接百度就可以了。但我觉得这个非常不方便，因为有时候不一定会使用GitHub（比如用gitee的话，访问反而会变慢）。</p>
 <p>所以我的方案是，在ZSH的配置文件中设置一个别名<code>proxy</code>，这样就可以按需使用了。</p>
-<h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><p>首先，要在你windows中的代理软件中开启<code>允许LAN连接</code>或<code>允许来自互联网的连接</code>的选项。因为WSL和VMware（或者Virtualbox）不一样。WSL默认只支持NAT模式（默认不启用桥接模式，具体区别可以百度），也就是相当于在Windows用虚拟网卡又做了一次NAT（又路由了一次，或者说又分配了一次ip地址，也就是WSL的位置是“内网中的内网”）。也就是说，WSL2无法使用127.0.0.1这个地址（Localhost）来代理，那应该使用哪个ip地址呢？</p>
+<h4 id="准备"><a class="markdownIt-Anchor" href="#准备"></a> 准备</h4>
+<p>首先，要在你windows中的代理软件中开启<code>允许LAN连接</code>或<code>允许来自互联网的连接</code>的选项。因为WSL和VMware（或者Virtualbox）不一样。WSL默认只支持NAT模式（默认不启用桥接模式，具体区别可以百度），也就是相当于在Windows用虚拟网卡又做了一次NAT（又路由了一次，或者说又分配了一次ip地址，也就是WSL的位置是“内网中的内网”）。也就是说，WSL2无法使用127.0.0.1这个地址（Localhost）来代理，那应该使用哪个ip地址呢？</p>
 <p>不是在wsl中通过ifconfig获得的ip地址哦，那个是wsl的ip地址。（我们所需要监听的ip地址和端口是在windows中的，所以要在windows中通过’ipconfig’来查看。）打开cmd：</p>
 <pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd">ifconfig<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>找到vEthernet (WSL)，这一项里的ip地址就是对于WSL来说的windows的ip地址。</p>
-<h4 id="在zsh配置文件中进行配置"><a href="#在zsh配置文件中进行配置" class="headerlink" title="在zsh配置文件中进行配置"></a>在zsh配置文件中进行配置</h4><p>在wsl中使用<code>cd</code>命令，来到默认用户目录，</p>
+<h4 id="在zsh配置文件中进行配置"><a class="markdownIt-Anchor" href="#在zsh配置文件中进行配置"></a> 在zsh配置文件中进行配置</h4>
+<p>在wsl中使用<code>cd</code>命令，来到默认用户目录，</p>
 <pre class="line-numbers language-zsh" data-language="zsh"><code class="language-zsh">vim .zshrc <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>在这个配置文件中添加一个新的别名<code>proxy</code>：（ip地址和端口，按照刚刚在cmd中获得的以及在代理软件中的来）</p>
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">alias proxy&#x3D;&#39;http_proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:1080 https_proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:1080 &#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h4 id="使用测试"><a href="#使用测试" class="headerlink" title="使用测试"></a>使用测试</h4><p>然后输入<code>zsh</code>来重启zsh（这不废话嘛！）需要代理的时候，就在git前面加上<code>proxy</code>:</p>
+<h4 id="使用测试"><a class="markdownIt-Anchor" href="#使用测试"></a> 使用测试</h4>
+<p>然后输入<code>zsh</code>来重启zsh（这不废话嘛！）需要代理的时候，就在git前面加上<code>proxy</code>:</p>
 <pre class="line-numbers language-ZSH" data-language="ZSH"><code class="language-ZSH">proxy git clone https:&#x2F;&#x2F;github.com&#x2F;xxx.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="是不是快的起飞！！！Enjoy"><a href="#是不是快的起飞！！！Enjoy" class="headerlink" title="是不是快的起飞！！！Enjoy!!!!!"></a>是不是快的起飞！！！Enjoy!!!!!</h2>]]></content>
+<h2 id="是不是快的起飞enjoy"><a class="markdownIt-Anchor" href="#是不是快的起飞enjoy"></a> 是不是快的起飞！！！Enjoy!!!</h2>
+]]></content>
       <tags>
         <tag>Linux</tag>
         <tag>WSL</tag>
@@ -187,8 +211,11 @@ sudo systemctl status halo<span aria-hidden="true" class="line-numbers-rows"><sp
   <entry>
     <title>oh-my-zsh配置</title>
     <url>/2020/08/24/oh-my-zsh%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<h1 id="配置oh-my-zsh和主题"><a href="#配置oh-my-zsh和主题" class="headerlink" title="配置oh-my-zsh和主题"></a>配置oh-my-zsh和主题</h1><h3 id="更改默认shell"><a href="#更改默认shell" class="headerlink" title="更改默认shell"></a>更改默认shell</h3><pre class="line-numbers language-none"><code class="language-none">chsh -s &#x2F;usr&#x2F;bin&#x2F;zsh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="配置oh-my-zsh"><a href="#配置oh-my-zsh" class="headerlink" title="配置oh-my-zsh"></a>配置oh-my-zsh</h3><p>github hosts文件更改</p>
+    <content><![CDATA[<h1 id="配置oh-my-zsh和主题"><a class="markdownIt-Anchor" href="#配置oh-my-zsh和主题"></a> 配置oh-my-zsh和主题</h1>
+<h3 id="更改默认shell"><a class="markdownIt-Anchor" href="#更改默认shell"></a> 更改默认shell</h3>
+<pre class="line-numbers language-none"><code class="language-none">chsh -s &#x2F;usr&#x2F;bin&#x2F;zsh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="配置oh-my-zsh"><a class="markdownIt-Anchor" href="#配置oh-my-zsh"></a> 配置oh-my-zsh</h3>
+<p>github hosts文件更改</p>
 <pre class="line-numbers language-none"><code class="language-none">sudo nano &#x2F;etc&#x2F;hosts<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>添加字段：</p>
 <pre class="line-numbers language-none"><code class="language-none"># GitHub Start
@@ -205,7 +232,8 @@ sudo systemctl status halo<span aria-hidden="true" class="line-numbers-rows"><sp
 <p>插件改为：</p>
 <pre class="line-numbers language-none"><code class="language-none">plugins&#x3D;(git zsh-syntax-highlighting zsh-autosuggestions sudo extract)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>执行<code>source ~/.zshrc</code></p>
-<h3 id="配置主题（Powerlevel-10k）"><a href="#配置主题（Powerlevel-10k）" class="headerlink" title="配置主题（Powerlevel-10k）"></a>配置主题（Powerlevel-10k）</h3><p>git命令克隆：</p>
+<h3 id="配置主题powerlevel-10k"><a class="markdownIt-Anchor" href="#配置主题powerlevel-10k"></a> 配置主题（Powerlevel-10k）</h3>
+<p>git命令克隆：</p>
 <p>github：</p>
 <pre class="line-numbers language-none"><code class="language-none">git clone --depth&#x3D;1 https:&#x2F;&#x2F;github.com&#x2F;romkatv&#x2F;powerlevel10k.git $&#123;ZSH_CUSTOM:-$HOME&#x2F;.oh-my-zsh&#x2F;custom&#125;&#x2F;themes&#x2F;powerlevel10k<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>gitee：</p>
@@ -216,7 +244,7 @@ sudo systemctl status halo<span aria-hidden="true" class="line-numbers-rows"><sp
 <pre class="line-numbers language-none"><code class="language-none">ZSH_THEME&#x3D;&quot;powerlevel10k&#x2F;powerlevel10k&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>想要启用主题中的图标，需要安装<code>nerd</code>字体</p>
 <p>比如Arch-Linux中的<code>nerd-fonts-hack</code>，<code>nerd-fonts-source-code-pro</code>等</p>
-<p>重启并按照步骤个性化设置 </p>
+<p>重启并按照步骤个性化设置</p>
 ]]></content>
       <tags>
         <tag>Shell</tag>
@@ -227,14 +255,18 @@ sudo systemctl status halo<span aria-hidden="true" class="line-numbers-rows"><sp
   <entry>
     <title>服务器搭建静态博客</title>
     <url>/2021/02/26/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1 id="在服务器上搭建静态博客"><a href="#在服务器上搭建静态博客" class="headerlink" title="在服务器上搭建静态博客"></a>在服务器上搭建静态博客</h1><hr>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>​    之前在服务器上搭建了基于<code>Halo</code>的动态博客系统，可以通过网页后台，方便进行博客写作和管理。但苦于资金有限，服务器性能一般，服务器除了要处理访问，还要挂着守护进程。于是就希望能有适于低性能服务器的解决方案。</p>
-<p>​    同时，自己一直通过<code>GithubPage</code>托管一部分博客，一直没能统一部署，所以希望能够寻求到能够同时部署到服务器和github.io的方案。</p>
-<p>​    这几天发现一个关于此的专栏（见文末引用），于是跟着步骤做了一遍。所以此篇为备忘。</p>
-<h2 id="停用Halo"><a href="#停用Halo" class="headerlink" title="停用Halo"></a>停用Halo</h2><p>先ssh连接到服务器，停用<code>Halo</code>的守护进程</p>
+    <content><![CDATA[<h1 id="在服务器上搭建静态博客"><a class="markdownIt-Anchor" href="#在服务器上搭建静态博客"></a> 在服务器上搭建静态博客</h1>
+<hr />
+<h2 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h2>
+<p>​	之前在服务器上搭建了基于<code>Halo</code>的动态博客系统，可以通过网页后台，方便进行博客写作和管理。但苦于资金有限，服务器性能一般，服务器除了要处理访问，还要挂着守护进程。于是就希望能有适于低性能服务器的解决方案。</p>
+<p>​	同时，自己一直通过<code>GithubPage</code>托管一部分博客，一直没能统一部署，所以希望能够寻求到能够同时部署到服务器和github.io的方案。</p>
+<p>​	这几天发现一个关于此的专栏（见文末引用），于是跟着步骤做了一遍。所以此篇为备忘。</p>
+<h2 id="停用halo"><a class="markdownIt-Anchor" href="#停用halo"></a> 停用Halo</h2>
+<p>先ssh连接到服务器，停用<code>Halo</code>的守护进程</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">systemctl disable halo
 systemctl stop halo<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="配置静态资源"><a href="#配置静态资源" class="headerlink" title="配置静态资源"></a>配置静态资源</h2><p>首先将已经托管在<code>GithubPage</code>的仓库克隆到<code>nginx</code>的默认静态资源目录<code>/var/www/html</code></p>
+<h2 id="配置静态资源"><a class="markdownIt-Anchor" href="#配置静态资源"></a> 配置静态资源</h2>
+<p>首先将已经托管在<code>GithubPage</code>的仓库克隆到<code>nginx</code>的默认静态资源目录<code>/var/www/html</code></p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> /var/www/html
 <span class="token function">git</span> clone xxxxx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>修改nginx的配置文件，将刚刚克隆的资源目录添加为root字段的值</p>
@@ -243,13 +275,16 @@ systemctl stop halo<span aria-hidden="true" class="line-numbers-rows"><span></sp
 	listen <span class="token punctuation">[</span>::<span class="token punctuation">]</span>:80 default_server<span class="token punctuation">;</span>
 
 	root /var/www/html/xxx.github.io<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="测试静态资源"><a href="#测试静态资源" class="headerlink" title="测试静态资源"></a>测试静态资源</h2><p>在浏览器输入服务器的ip和端口号（一般为80，就是nginx配置文件中的）</p>
+<h2 id="测试静态资源"><a class="markdownIt-Anchor" href="#测试静态资源"></a> 测试静态资源</h2>
+<p>在浏览器输入服务器的ip和端口号（一般为80，就是nginx配置文件中的）</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">xxx.xxx.xxx.xxx:80<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>如果成功加载网页，就说明之前的配置成功。</p>
 <p>但现在无法使用之前的配置进行<code>域名访问</code>。只需要将之前在<code>/etc/nginx/config.d/</code>下的配置文件（这是Ubuntu的nginx目录，红帽系的可能有所不同）里有root字段的目录也改为和上文nginx配置文件里的一样的就好。（Halo原来的配置为通过代理监听Halo的端口。）</p>
 <p>至此，已经可以通过域名访问从github克隆到服务器的静态资源了。</p>
-<h2 id="配置同时部署"><a href="#配置同时部署" class="headerlink" title="配置同时部署"></a>配置同时部署</h2><p>如果想将本地机里的静态资源同时部署到github和服务器的话，就需要在服务器也创建一个git仓库，并在本地机里将hexo根目录下配置文件里的deploy项进行修改。</p>
-<h4 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h4><p>首先创建一个git用户，用m选项添加家目录，并将其加入root用户组</p>
+<h2 id="配置同时部署"><a class="markdownIt-Anchor" href="#配置同时部署"></a> 配置同时部署</h2>
+<p>如果想将本地机里的静态资源同时部署到github和服务器的话，就需要在服务器也创建一个git仓库，并在本地机里将hexo根目录下配置文件里的deploy项进行修改。</p>
+<h4 id="创建仓库"><a class="markdownIt-Anchor" href="#创建仓库"></a> 创建仓库</h4>
+<p>首先创建一个git用户，用m选项添加家目录，并将其加入root用户组</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">useradd</span> <span class="token function">git</span> -m -G root<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>进入git的家目录并创建裸仓库<code>hexo.git</code>,并将仓库所有者和组权限进行修改</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">cd</span> /home/git/
@@ -265,7 +300,8 @@ systemctl stop halo<span aria-hidden="true" class="line-numbers-rows"><span></sp
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">chmod</span> +x post-receive<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这样，一会儿部署的静态资源就会储存到nginx的默认静态资源目录（见前文）。</p>
 <p>除此，为了在部署时免除密码，需要将本地机的ssh公钥导入git家目录下的<code>~/.ssh/authorized_keys</code>文件中。（如果在root或默认目录下有，也可以复制一份）。</p>
-<h3 id="配置本地机部署"><a href="#配置本地机部署" class="headerlink" title="配置本地机部署"></a>配置本地机部署</h3><p>编辑本地机的Hexo根目录下的配置文件（<code>_config.yml</code>）,修改<code>deploy</code>的内容：</p>
+<h3 id="配置本地机部署"><a class="markdownIt-Anchor" href="#配置本地机部署"></a> 配置本地机部署</h3>
+<p>编辑本地机的Hexo根目录下的配置文件（<code>_config.yml</code>）,修改<code>deploy</code>的内容：</p>
 <pre class="line-numbers language-yml" data-language="yml"><code class="language-yml"># Deployment
 ## Docs: https:&#x2F;&#x2F;hexo.io&#x2F;docs&#x2F;one-command-deployment
 deploy: 
@@ -274,7 +310,8 @@ deploy:
         github: git@github.com:your_github_name&#x2F;your_github_name.github.io.git,main
         hexo: git@your_server_ip:&#x2F;home&#x2F;git&#x2F;hexo.git,master
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h5 id="至此，使用hexo-d就可以同时部署到GithubPage和自己的服务器上了！"><a href="#至此，使用hexo-d就可以同时部署到GithubPage和自己的服务器上了！" class="headerlink" title="至此，使用hexo d就可以同时部署到GithubPage和自己的服务器上了！"></a>至此，使用<code>hexo d</code>就可以同时部署到GithubPage和自己的服务器上了！</h5><p>References：</p>
+<h5 id="至此使用hexo-d就可以同时部署到githubpage和自己的服务器上了"><a class="markdownIt-Anchor" href="#至此使用hexo-d就可以同时部署到githubpage和自己的服务器上了"></a> 至此，使用<code>hexo d</code>就可以同时部署到GithubPage和自己的服务器上了！</h5>
+<p>References：</p>
 <p><a href="https://zhuanlan.zhihu.com/p/58654392">https://zhuanlan.zhihu.com/p/58654392</a></p>
 ]]></content>
       <tags>

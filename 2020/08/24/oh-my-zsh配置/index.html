@@ -125,6 +125,16 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">18</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">6</span></a>
+
+  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -229,8 +239,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="配置oh-my-zsh和主题"><a href="#配置oh-my-zsh和主题" class="headerlink" title="配置oh-my-zsh和主题"></a>配置oh-my-zsh和主题</h1><h3 id="更改默认shell"><a href="#更改默认shell" class="headerlink" title="更改默认shell"></a>更改默认shell</h3><pre class="line-numbers language-none"><code class="language-none">chsh -s &#x2F;usr&#x2F;bin&#x2F;zsh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="配置oh-my-zsh"><a href="#配置oh-my-zsh" class="headerlink" title="配置oh-my-zsh"></a>配置oh-my-zsh</h3><p>github hosts文件更改</p>
+        <h1 id="配置oh-my-zsh和主题"><a class="markdownIt-Anchor" href="#配置oh-my-zsh和主题"></a> 配置oh-my-zsh和主题</h1>
+<h3 id="更改默认shell"><a class="markdownIt-Anchor" href="#更改默认shell"></a> 更改默认shell</h3>
+<pre class="line-numbers language-none"><code class="language-none">chsh -s &#x2F;usr&#x2F;bin&#x2F;zsh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="配置oh-my-zsh"><a class="markdownIt-Anchor" href="#配置oh-my-zsh"></a> 配置oh-my-zsh</h3>
+<p>github hosts文件更改</p>
 <pre class="line-numbers language-none"><code class="language-none">sudo nano &#x2F;etc&#x2F;hosts<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>添加字段：</p>
 <pre class="line-numbers language-none"><code class="language-none"># GitHub Start
@@ -247,7 +260,8 @@
 <p>插件改为：</p>
 <pre class="line-numbers language-none"><code class="language-none">plugins&#x3D;(git zsh-syntax-highlighting zsh-autosuggestions sudo extract)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>执行<code>source ~/.zshrc</code></p>
-<h3 id="配置主题（Powerlevel-10k）"><a href="#配置主题（Powerlevel-10k）" class="headerlink" title="配置主题（Powerlevel-10k）"></a>配置主题（Powerlevel-10k）</h3><p>git命令克隆：</p>
+<h3 id="配置主题powerlevel-10k"><a class="markdownIt-Anchor" href="#配置主题powerlevel-10k"></a> 配置主题（Powerlevel-10k）</h3>
+<p>git命令克隆：</p>
 <p>github：</p>
 <pre class="line-numbers language-none"><code class="language-none">git clone --depth&#x3D;1 https:&#x2F;&#x2F;github.com&#x2F;romkatv&#x2F;powerlevel10k.git $&#123;ZSH_CUSTOM:-$HOME&#x2F;.oh-my-zsh&#x2F;custom&#125;&#x2F;themes&#x2F;powerlevel10k<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>gitee：</p>
@@ -258,7 +272,7 @@
 <pre class="line-numbers language-none"><code class="language-none">ZSH_THEME&#x3D;&quot;powerlevel10k&#x2F;powerlevel10k&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>想要启用主题中的图标，需要安装<code>nerd</code>字体</p>
 <p>比如Arch-Linux中的<code>nerd-fonts-hack</code>，<code>nerd-fonts-source-code-pro</code>等</p>
-<p>重启并按照步骤个性化设置 </p>
+<p>重启并按照步骤个性化设置</p>
 
     </div>
 
@@ -345,7 +359,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEoh-my-zsh%E5%92%8C%E4%B8%BB%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">配置oh-my-zsh和主题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4shell"><span class="nav-number">1.0.1.</span> <span class="nav-text">更改默认shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEoh-my-zsh"><span class="nav-number">1.0.2.</span> <span class="nav-text">配置oh-my-zsh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%BB%E9%A2%98%EF%BC%88Powerlevel-10k%EF%BC%89"><span class="nav-number">1.0.3.</span> <span class="nav-text">配置主题（Powerlevel-10k）</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEoh-my-zsh%E5%92%8C%E4%B8%BB%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text"> 配置oh-my-zsh和主题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E9%BB%98%E8%AE%A4shell"><span class="nav-number">1.0.1.</span> <span class="nav-text"> 更改默认shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEoh-my-zsh"><span class="nav-number">1.0.2.</span> <span class="nav-text"> 配置oh-my-zsh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%BB%E9%A2%98powerlevel-10k"><span class="nav-number">1.0.3.</span> <span class="nav-text"> 配置主题（Powerlevel-10k）</span></a></li></ol></li></ol></li></ol></div>
 
         
 
@@ -362,13 +376,15 @@
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
+          <a href="/archives/">
+        
           <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
+          
         <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
