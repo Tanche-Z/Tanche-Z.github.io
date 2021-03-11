@@ -238,15 +238,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="问题"><a class="markdownIt-Anchor" href="#问题"></a> 问题</h3>
-<p>在按下调试按钮后，可以成功编译出二进制文件，但不会在终端中运行、输出。</p>
-<h3 id="猜测"><a class="markdownIt-Anchor" href="#猜测"></a> 猜测</h3>
-<p>应该是<code>lauch.json</code>的配置有问题。</p>
-<h3 id="解决方案"><a class="markdownIt-Anchor" href="#解决方案"></a> 解决方案</h3>
-<h4 id="安装插件"><a class="markdownIt-Anchor" href="#安装插件"></a> 安装插件</h4>
-<p>经过广泛搜索和摸索，似乎是VS code默认不再原生支持lldb调试，需要安装插件<code>CodeLLDB</code>，并重新配置<code>lauch.json</code>文件，具体配置可参考插件介绍页面的<code>Quick Start</code>栏。</p>
-<h4 id="修改配置"><a class="markdownIt-Anchor" href="#修改配置"></a> 修改配置</h4>
-<p>需要注意，如需要在编译后自动调试，还需要将<code>program</code>项的值改为和<code>tasks.json</code>文件中的一样。除此之外还需要加入<code>preLaunchTask</code>项。以下为我的<code>launch.json</code>全文件。</p>
+        <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在按下调试按钮后，可以成功编译出二进制文件，但不会在终端中运行、输出。</p>
+<h3 id="猜测"><a href="#猜测" class="headerlink" title="猜测"></a>猜测</h3><p>应该是<code>lauch.json</code>的配置有问题。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h4><p>经过广泛搜索和摸索，似乎是VS code默认不再原生支持lldb调试，需要安装插件<code>CodeLLDB</code>，并重新配置<code>lauch.json</code>文件，具体配置可参考插件介绍页面的<code>Quick Start</code>栏。</p>
+<h4 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h4><p>需要注意，如需要在编译后自动调试，还需要将<code>program</code>项的值改为和<code>tasks.json</code>文件中的一样。除此之外还需要加入<code>preLaunchTask</code>项。以下为我的<code>launch.json</code>全文件。</p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">&#123;</span>
     <span class="token comment">// 使用 IntelliSense 了解相关属性。 </span>
     <span class="token comment">// 悬停以查看现有属性的描述。</span>
@@ -265,6 +260,7 @@
         <span class="token punctuation">&#125;</span>
     <span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>至此就可以用lldb正常调试。</p>
 <p>注意：当修改<code>&quot;type&quot;</code>项的时候，<code>&quot;console&quot;</code>项也需要跟着变化（虽然都是控制终端，但写法不同）。</p>
 
@@ -349,7 +345,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text"> 问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8C%9C%E6%B5%8B"><span class="nav-number">2.</span> <span class="nav-text"> 猜测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text"> 解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text"> 安装插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text"> 修改配置</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8C%9C%E6%B5%8B"><span class="nav-number">2.</span> <span class="nav-text">猜测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">修改配置</span></a></li></ol></li></ol></div>
 
         
 
@@ -362,23 +358,6 @@
       src="/images/assassin_favicon.png">
   <p class="site-author-name" itemprop="name">Tanche-Z</p>
   <div class="site-description" itemprop="description">宝剑锋从磨砺出，梅花香自苦寒来</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">6</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">18</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
